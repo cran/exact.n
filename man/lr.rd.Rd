@@ -26,7 +26,8 @@ lr.rd(
 
 \item{psi}{null value of risk difference p1-p0}
 
-\item{sided}{1-sided or 2-sided test}
+\item{sided}{(1 or 2 sided test)
+#' @param sided 1-sided or 2-sided test}
 
 \item{mod}{A very small adjustment to account for 0*log0 in certain
 likelihood calculations. Should not need adjustment.}
@@ -50,9 +51,8 @@ values for Y0, Y1 are supplied then only these outcomes of the SRLR are
 calculated.
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

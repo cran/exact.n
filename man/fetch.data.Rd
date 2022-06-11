@@ -11,7 +11,7 @@ fetch.data(alpha, delta, prin = FALSE)
 
 \item{delta}{value of clinically relevant difference}
 
-\item{prin}{shows progress of calculation}
+\item{prin}{If TRUE, error and/or warning messages are printed.}
 }
 \value{
 No return value. A library object will appear in the global environment.
@@ -26,13 +26,12 @@ a minute. The object will have a name of the form LIB.alpha.delta.Rdata.
 #'
 \dontrun{
 fetch.data(alpha=0.05,delta=0.10)
+# Object LIB.a050.d10 will appear with 83,289,960 elements
 }
 
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to size and power constraints. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

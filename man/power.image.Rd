@@ -11,7 +11,7 @@ power.image(data, p = 0.2, binary = TRUE, beta = 0.75)
 
 \item{p}{a scalar value for p0.vals that is used to select the subset of data.}
 
-\item{binary}{shouuld the power (F) or just whether it exceeds beta (T)?}
+\item{binary}{If TRUE only the binary indicator of power exceeding beta is displayed.}
 
 \item{beta}{target value of power}
 }

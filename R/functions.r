@@ -11,7 +11,7 @@
 #' @aliases power.image
 #' @param data a matrix of powers with columns named beta p0.vals, n0 and n1.
 #' @param p a scalar value for p0.vals that is used to select the subset of data.
-#' @param binary shouuld the power (F) or just whether it exceeds beta (T)?
+#' @param binary If TRUE only the binary indicator of power exceeding beta is displayed.
 #' @param beta target value of power
 #' @return No return value and if the 'binary' parameter is TRUE then an image will be displayed
 #' @author Chris J. Lloyd
@@ -34,7 +34,8 @@ power.image=function(data,p=0.2,binary=TRUE,beta=.75){
   image.data=image.data[order(image.data[,4]),]
   image.data=image.data[order(image.data[,3]),]
   image.data=matrix(image.data[,1],ncol=(N0-19))
-  if(!binary){graphics::image(20:N0,20:N1,image.data,xlab="n0",ylab="n1")}
+  if(!binary){graphics::image(20:N0,20:N1,t(image.data),
+                   xlab=expression("n"[0]) ,ylab=expression("n"[1]))}
   if(binary){graphics::image(20:N0,20:N1,t(image.data>beta),
                    xlab=expression("n"[0]) ,ylab=expression("n"[1]))}
   #abline(0,1,lty=3,col="gray")
@@ -75,9 +76,8 @@ power.image=function(data,p=0.2,binary=TRUE,beta=.75){
 #' found in the database. A non-integer indicates an extrapolated solution. An
 #' Inf value indicates no extrapolated solution was found.
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @importFrom stats qnorm lm pnorm
 #' @importFrom graphics lines abline plot
 #' @examples
@@ -110,8 +110,8 @@ n1.get=function(data,n0,beta,delta,alpha,type=1,plt=FALSE){
   # ARGUMENTS:
   # data: a matrix typically selected for a subset of p0 (with 481^2 rows)
   # n0, delta, alpha, beta: scalar values as defined in paper
-  # type: (1) means find smallest value N1 of n1 so that power > beta
-  #       (2) means find smallest value N1 of n1 so that power > beta for all n1>=N1
+  # type: (1) find smallest value N1 of n1 so that power > beta
+  #       (2) find smallest value N1 of n1 so that power > beta for all n1>=N1
   # plt: if true you will see a plot of power against n1 with model
   #
   N0=max(data[,4])
@@ -177,9 +177,8 @@ n1.get=function(data,n0,beta,delta,alpha,type=1,plt=FALSE){
 #' @return a list with element x (giving range of values of n0) and y (giving
 #' minimal solutions for n1 of power > beta). integer indicates
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @keywords ~htest ~design
 #' @keywords internal
 n1.get.vector=function(data,beta,p0,delta,alpha,type=1){
@@ -214,8 +213,7 @@ n1.get.vector=function(data,beta,p0,delta,alpha,type=1){
 #' supplied range and then takes the worst (i.e. largest) solution for n1
 #'
 #'
-#' @param data power database for selected value of alpha and delta (See
-#' details)
+#' @param data power database for selected value of alpha and delta
 #' @param beta scalar target for power
 #' @param p0 single value or range of values for baseline probability
 #' @param delta value of clinically relevant difference
@@ -224,9 +222,8 @@ n1.get.vector=function(data,beta,p0,delta,alpha,type=1){
 #' @return vector of solutions for n1 with name vector equal to range of n0
 #' values
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @examples
 #'
 #' # Load toy version of power library for alpha=0.025, delta=0.20.
@@ -261,34 +258,34 @@ n1.get.solution=function(data,beta,p0,delta,alpha,type=1){
 #' Function gives smallest values for n1 as function of n0 that achieve target
 #' size and power.
 #'
-#' If out > 0 all solutions (including n1=Inf) are return. If out=0, infinite
+#' If out > 0 all solutions (including n1=Inf) are returned. If out=0, infinite
 #' values are suppressed. If out < 0, only output satisfying the balance
-#' criterin are output.
+#' criterion are output.
 #'
 #' @param alpha value of nominal size of test
 #' @param delta value of clinically relevant difference
 #' @param beta scalar target for power
 #' @param p0 single value or range of values for baseline probability
 #' @param type type of maximisation (see n1.get documentation)
-#' @param plt Plot n1 solutions versis n0 if true
+#' @param plt If TRUE, plot n1 solutions versus
 #' @param out More solutions output if out > 0 than out < 0 (see details)
 #' @param b.lim maximum imbalance of sample sizes
-#' @param prin shows progress of calculation
+#' @param prin If TRUE, error messages will be printed.
 #' @return list with elements n0 and n1
 #' @note The appropriate data file needs to have been downloaded corresponding
 #' to the desired value of alpha and delta. This can be done with the
 #' fetch.data() function.
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @importFrom graphics par title plot abline
 #' @examples
 #'
-#' # To run this function you need to have downloaded LIB.a025.d20
-#' # into the global environment. We are interested in designs with
-#' # exact size 0.025 and power at least 0.75 when delta=0.20. The
-#' # baseline probability is thought to be between 0.3 and 0.5.
+#' # We are interested in designs with power at least 0.75 when exact size
+#' # 0.025 and delta=0.20. Therefore, you would need to have downloaded
+#' # LIB.a025.d20 using fetch(0.015,0.20). The example below instead uses
+#' # the toy data that comes with the package. The baseline probability is
+#' # assumed to be between 0.3 and 0.5.
 #' rdata_file = system.file('files', 'LIB.a025.d20.Rdata', package = 'exact.n')
 #' load(rdata_file)
 #' #' main.function(.025,0.20,p0=c(0.3,0.5),beta=0.75,plt=TRUE)
@@ -296,18 +293,19 @@ n1.get.solution=function(data,beta,p0,delta,alpha,type=1){
 #' # of values of n0. The sample size ratio is limited to 5 by default.
 #'
 #' @export main.function
-main.function=function(alpha,delta,beta=.75,p0=.5,type=2,plt=FALSE,
-                       out=(-1),b.lim=5, prin = FALSE){
 
+main.function=function(alpha,delta,beta=.75,p0=.5,type=2,plt=FALSE,
+                       out=(-1),b.lim=5, prin = TRUE){
   # reset "par" using on.exit()
   init_par <- graphics::par(no.readonly = TRUE)
   on.exit(graphics::par(init_par))
-
+  # Check allowable values of delta
   delta.vals=(5:20)/100
   if(!is.element(delta,delta.vals)){
     if (prin) cat("Allowable values of delta are 0.05, 0.06, ... , 0.19, 0.20","\n")
     stop()
   }
+  # Check allowable values of alpha
   alpha.vals=c(0.01,0.02,0.025,0.05,0.10)
   if(!is.element(alpha,alpha.vals)){
     if (prin) cat("Allowable values of alpha are 0.01, 0.02, 0.025, 0.05, 0.10","\n")
@@ -337,8 +335,8 @@ main.function=function(alpha,delta,beta=.75,p0=.5,type=2,plt=FALSE,
     if(length(p0)>1){P0=p0.vals[p0.vals<=max(p0)&p0.vals>=min(p0)]}
     P0.mean=round(100*mean(P0),0)/100
     power.image(data=full.data,p=P0.mean,beta=beta)
-    graphics::title(paste("Power>",beta,", p0=",P0.mean,sep=""))
-  }
+    graphics::title(bquote(italic(beta)*phantom() > .(beta) ~ ',' ~ italic(p)[0] %in% .(sprintf('[%s]', toString(p0)))))  }
+
   result=n1.get.solution(data=full.data,beta=beta,p0=p0,
                          delta=delta,alpha=alpha,type=type)
   n0=as.numeric(names(result))
@@ -384,15 +382,15 @@ main.function=function(alpha,delta,beta=.75,p0=.5,type=2,plt=FALSE,
 #' @param type either "lr" for approximate or "elr" for quasi-exact test
 #' @param p0 baseline probability. If missing, a grid of values is created for
 #' plotting. A scalar value can also be supplied.
+#' @param sided (1 or 2 sided test)
 #' @param obj Optional object with all possible p-values. Must be a list with
 #' elements y0, y1, P (typically output of lr.rd or ESTEP.rd). If not supplied
 #' then object is generated from n0, n1 and psi.
 #' @return list with element x (containing values of baseline probability)
 #' and element y (containing corresponding exact powers)
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @importFrom stats dbinom
 #' @examples
 #' oldpar <- graphics::par()
@@ -449,7 +447,7 @@ main.function=function(alpha,delta,beta=.75,p0=.5,type=2,plt=FALSE,
 #' suppressWarnings(graphics::par(oldpar))
 #'
 #' @export POWER
-POWER=function(n0,n1,alpha=0.05,delta=0,psi=0,type="lr",p0=NULL,obj=NULL){
+POWER=function(n0,n1,alpha=0.05,delta=0,psi=0,type="lr",sided=1,p0=NULL,obj=NULL){
   # n0, n1 - sample sizes of control and treatment group
   # delta = fixed value (the null value is typically negative but non-null value could be positive).
   # type - either "lr" or "elr"
@@ -469,8 +467,8 @@ POWER=function(n0,n1,alpha=0.05,delta=0,psi=0,type="lr",p0=NULL,obj=NULL){
   }
   #
   if(missing(obj)){
-    if(type=="lr"){obj=lr.rd(n0,n1,psi=psi)}
-    if(type=="elr"){obj=ESTEP.rd(n0,n1,psi=psi)}
+    if(type=="lr"){obj=lr.rd(n0,n1,psi=psi,sided=sided)}
+    if(type=="elr"){obj=ESTEP.rd(n0,n1,psi=psi,sided=sided)}
   }
   y0<-obj$y0
   y1<-obj$y1
@@ -513,7 +511,8 @@ POWER=function(n0,n1,alpha=0.05,delta=0,psi=0,type="lr",p0=NULL,obj=NULL){
 #' @param Y0 number of successes for control (see details)
 #' @param Y1 number of successes for treatment (see details)
 #' @param psi null value of risk difference p1-p0
-#' @param sided 1-sided or 2-sided test
+#' @param sided (1 or 2 sided test)
+#' #' @param sided 1-sided or 2-sided test
 #' @param mod A very small adjustment to account for 0*log0 in certain
 #' likelihood calculations. Should not need adjustment.
 #' @param dec.places number of decimal places of t-values and p-value.
@@ -523,9 +522,8 @@ POWER=function(n0,n1,alpha=0.05,delta=0,psi=0,type="lr",p0=NULL,obj=NULL){
 #' \item{index}{consistent code to select a single outcome} \item{psi}{scalar
 #' null value of p1-p0}
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @importFrom stats pnorm
 #' @keywords internal
 lr.rd=function(n0, n1,Y0=NULL,Y1=NULL,psi=0,sided=1,mod=.0000001,dec.places=10){
@@ -632,6 +630,7 @@ lr.rd=function(n0, n1,Y0=NULL,Y1=NULL,psi=0,sided=1,mod=.0000001,dec.places=10){
 #' @param n1 treatment sample size
 #' @param psi null value of risk difference p1-p0
 #' @param J index of single data set if desired
+#' @param sided (1 or 2 sided test)
 #' @param dec.places number of decimal places of output t-values and p-values.
 #' @param prin outputs expected time and progress of calculation
 #' @return A list with elements \item{y0,y1}{data sets (scalar or vector)}
@@ -640,12 +639,11 @@ lr.rd=function(n0, n1,Y0=NULL,Y1=NULL,psi=0,sided=1,mod=.0000001,dec.places=10){
 #' baseline probability} \item{index}{consistent code to select a single
 #' outcome} \item{psi}{scalar null value of p1-p0}
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @importFrom stats dbinom qnorm
 #' @keywords internal
-ESTEP.rd=function(n0,n1,psi=0,J=NULL,dec.places=10,prin=FALSE){
+ESTEP.rd=function(n0,n1,psi=0,J=NULL,sided=1,dec.places=10,prin=FALSE){
   # FUNCTION PRODUCES PLUG-IN OR ESTIMATED EXACT P-VALUES FROM APPROXIMATE P-VALUES
   #
   # ARGUMENTS:
@@ -677,7 +675,7 @@ ESTEP.rd=function(n0,n1,psi=0,J=NULL,dec.places=10,prin=FALSE){
     rmle
   }
   #
-  stat=lr.rd(n0,n1,psi=psi)
+  stat=lr.rd(n0,n1,psi=psi,sided=sided)
   index<-1:((n0+1)*(n1+1))
   #
   phat<-profile.mle.rd(stat$y0,n0,stat$y1,n1,psi)
@@ -708,8 +706,7 @@ ESTEP.rd=function(n0,n1,psi=0,J=NULL,dec.places=10,prin=FALSE){
 
 #' Approximate and exact tests for single data set
 #'
-#' For a single provided data sets (y0, n0, y1, n1) approximate and exact tests
-#' of the null value p1-p0=psi are calculated.
+#' For a single provided data sets (y0, n0, y1, n1) calculate approximate and quasi-exact test statistics of the null value p1-p0=psi.
 #'
 #'
 #' @param y0 number of successes for control
@@ -725,9 +722,8 @@ ESTEP.rd=function(n0,n1,psi=0,J=NULL,dec.places=10,prin=FALSE){
 #' maximum likelihood estimate of baseline probability} \item{psi}{null value
 #' of p1-p0}
 #' @author Chris J. Lloyd
-#' @references C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-#' library for exact required sample size in binary clinical trials.
-#' Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+#' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+#' size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 #' @examples
 #'
 #' y0=25

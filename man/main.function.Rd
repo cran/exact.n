@@ -13,7 +13,7 @@ main.function(
   plt = FALSE,
   out = (-1),
   b.lim = 5,
-  prin = FALSE
+  prin = TRUE
 )
 }
 \arguments{
@@ -27,13 +27,13 @@ main.function(
 
 \item{type}{type of maximisation (see n1.get documentation)}
 
-\item{plt}{Plot n1 solutions versis n0 if true}
+\item{plt}{If TRUE, plot n1 solutions versus}
 
 \item{out}{More solutions output if out > 0 than out < 0 (see details)}
 
 \item{b.lim}{maximum imbalance of sample sizes}
 
-\item{prin}{shows progress of calculation}
+\item{prin}{If TRUE, error messages will be printed.}
 }
 \value{
 list with elements n0 and n1
@@ -43,9 +43,9 @@ Function gives smallest values for n1 as function of n0 that achieve target
 size and power.
 }
 \details{
-If out > 0 all solutions (including n1=Inf) are return. If out=0, infinite
+If out > 0 all solutions (including n1=Inf) are returned. If out=0, infinite
 values are suppressed. If out < 0, only output satisfying the balance
-criterin are output.
+criterion are output.
 }
 \note{
 The appropriate data file needs to have been downloaded corresponding
@@ -54,10 +54,11 @@ fetch.data() function.
 }
 \examples{
 
-# To run this function you need to have downloaded LIB.a025.d20
-# into the global environment. We are interested in designs with
-# exact size 0.025 and power at least 0.75 when delta=0.20. The
-# baseline probability is thought to be between 0.3 and 0.5.
+# We are interested in designs with power at least 0.75 when exact size
+# 0.025 and delta=0.20. Therefore, you would need to have downloaded
+# LIB.a025.d20 using fetch(0.015,0.20). The example below instead uses
+# the toy data that comes with the package. The baseline probability is
+# assumed to be between 0.3 and 0.5.
 rdata_file = system.file('files', 'LIB.a025.d20.Rdata', package = 'exact.n')
 load(rdata_file)
 #' main.function(.025,0.20,p0=c(0.3,0.5),beta=0.75,plt=TRUE)
@@ -66,9 +67,8 @@ load(rdata_file)
 
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

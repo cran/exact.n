@@ -40,9 +40,8 @@ type=2, the smallest value N1 of n1 so that power > beta for all n1>=N1 is
 returned.
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

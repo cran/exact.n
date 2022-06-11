@@ -29,8 +29,7 @@ maximum likelihood estimate of baseline probability} \item{psi}{null value
 of p1-p0}
 }
 \description{
-For a single provided data sets (y0, n0, y1, n1) approximate and exact tests
-of the null value p1-p0=psi are calculated.
+For a single provided data sets (y0, n0, y1, n1) calculate approximate and quasi-exact test statistics of the null value p1-p0=psi.
 }
 \examples{
 
@@ -44,9 +43,8 @@ inference(y0,n0,y1,n1,psi=-0.1)
 
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

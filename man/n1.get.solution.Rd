@@ -7,8 +7,7 @@
 n1.get.solution(data, beta, p0, delta, alpha, type = 1)
 }
 \arguments{
-\item{data}{power database for selected value of alpha and delta (See
-details)}
+\item{data}{power database for selected value of alpha and delta}
 
 \item{beta}{scalar target for power}
 
@@ -41,9 +40,8 @@ n1.get.solution(LIB.a025.d20,beta=.7,p0=c(0.4,0.5),delta=0.2,alpha=0.025,type=1)
 
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

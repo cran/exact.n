@@ -11,6 +11,7 @@ POWER(
   delta = 0,
   psi = 0,
   type = "lr",
+  sided = 1,
   p0 = NULL,
   obj = NULL
 )
@@ -27,6 +28,8 @@ POWER(
 \item{psi}{null value of risk difference p1-p0}
 
 \item{type}{either "lr" for approximate or "elr" for quasi-exact test}
+
+\item{sided}{(1 or 2 sided test)}
 
 \item{p0}{baseline probability. If missing, a grid of values is created for
 plotting. A scalar value can also be supplied.}
@@ -103,9 +106,8 @@ suppressWarnings(graphics::par(oldpar))
 
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd

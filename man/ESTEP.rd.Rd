@@ -4,7 +4,7 @@
 \alias{ESTEP.rd}
 \title{Calculate E-P-values based on LR statistic.}
 \usage{
-ESTEP.rd(n0, n1, psi = 0, J = NULL, dec.places = 10, prin = FALSE)
+ESTEP.rd(n0, n1, psi = 0, J = NULL, sided = 1, dec.places = 10, prin = FALSE)
 }
 \arguments{
 \item{n0}{control sample size}
@@ -14,6 +14,8 @@ ESTEP.rd(n0, n1, psi = 0, J = NULL, dec.places = 10, prin = FALSE)
 \item{psi}{null value of risk difference p1-p0}
 
 \item{J}{index of single data set if desired}
+
+\item{sided}{(1 or 2 sided test)}
 
 \item{dec.places}{number of decimal places of output t-values and p-values.}
 
@@ -35,9 +37,8 @@ This function can take a long time for larger sample sizes. The computation
 time is of order (n0*n1)^2.
 }
 \references{
-C.J. Lloyd & R. Ripamonti (2021) A comprehensive open-source
-library for exact required sample size in binary clinical trials.
-Contemporary Clinical Trials 107. \doi{10.1016/j.cct.2021.106491}
+C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to
+size and power constraints. Preprint. \doi{10.13140/RG.2.2.11828.94085}
 }
 \author{
 Chris J. Lloyd
