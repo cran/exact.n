@@ -12,6 +12,7 @@
 #' @return No return value. A library object will appear in the global environment.
 #' @author Chris J. Lloyd
 #' @importFrom utils download.file
+#' @importFrom httr GET user_agent write_disk
 #' @references C.J. Lloyd (2022) Exact samples sizes for clinical trials subject to size and power constraints. \doi{10.13140/RG.2.2.11828.94085}
 #' @examples
 #' #'
@@ -49,14 +50,15 @@ fetch.data=function(alpha,delta, prin = FALSE){
   URL.name=paste("https://chrislloyd.com.au/wp-content/themes/chrislloydblog/software/",LIB.name(alpha,delta),".Rdata",sep="")
   temp_RData = tempfile(fileext = '.Rdata')
 #
-  if (prin) cat("This download may a minute or two.....","\n")
+  if (prin) cat("This download may take a minute or two.....","\n")
   if (prin) cat("A large matrix starting with LIB should appear in your global environment.","\n")
   if (prin) cat("It will have more than 20 million rows so it is best","\n")
   if (prin) cat("not to bother trying to view it.","\n")
   if (prin) cat("\n")
 #
-  download.file(url = URL.name, destfile = temp_RData,
-                method = 'curl', quiet = T)
+  res_downl = httr::GET(URL.name,
+                        httr::user_agent("Mozilla/5.0"),
+                        httr::write_disk(temp_RData, overwrite = TRUE))
   load(file = temp_RData,envir = .GlobalEnv)
   rm(temp_RData,URL.name)
   NULL

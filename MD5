@@ -1,10 +1,10 @@
-22e972f3d6442e6bbe0447f9dbc17829 *DESCRIPTION
-694b9364389df87346c085f8abded7ff *NAMESPACE
+3dac3b34e57292ee621ac24c61e5b21e *DESCRIPTION
+1aa882dd935f26f9fb2732917d10e460 *NAMESPACE
 a9f81c32df09cd68a2115ce1b0fd6bcf *NEWS.md
-752e363b07b6960ed2dcab593cd2f0bc *R/fetch.data.r
+ead8fc65fcfad30ca2ab0fa350189ad2 *R/fetch.data.r
 449940c7da36a87d2db4426f628e3abc *R/functions.r
 c7941f6ff2cbb3228eb371e0b3cb8c04 *README.md
-3d3c97abaff6875210ef11578c3260eb *build/partial.rdb
+f01682ffd9d5582c0d3b8a226f3c2b16 *build/partial.rdb
 109fdf00cbcbccf4ceb7a29fb9a87819 *inst/files/LIB.a025.d20.Rdata
 aaf021ed3272a14bb454fad0faad8094 *inst/files/elr.stats.Rdata
 29bd48346d06f63d66d3c97a4d82233c *inst/files/elr10.stats.Rdata
